@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>HomeSecure · IoT Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root{--bg:#090e1c;--panel:#11182a;--panel2:#151f34;--line:rgba(169,190,230,.12);--text:#f2f6ff;--muted:#8e9bb7;--cyan:#53e0e7;--blue:#7c8cff;--green:#42d6a4;--red:#ff6b7a;--shadow:0 22px 60px rgba(0,0,0,.24)}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at 12% 0%,rgba(61,103,207,.18),transparent 36%),radial-gradient(ellipse at 100% 15%,rgba(41,203,203,.09),transparent 32%),var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
+    button,input{font:inherit} button{cursor:pointer} .shell{max-width:1240px;margin:auto;padding:28px 26px 40px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:34px}.brand{display:flex;align-items:center;gap:13px}.brand-icon{height:46px;width:46px;border-radius:15px;display:grid;place-items:center;color:#07131e;background:linear-gradient(135deg,var(--cyan),#7d9cff);font-size:20px;box-shadow:0 8px 28px #53e0e733}.brand h1{font:700 21px 'Space Grotesk',sans-serif;margin:0;letter-spacing:-.5px}.brand p{margin:3px 0 0;color:var(--muted);font-size:12px;letter-spacing:.2px}.top-actions{display:flex;align-items:center;gap:10px}.connection{display:flex;align-items:center;gap:8px;padding:10px 13px;border:1px solid var(--line);border-radius:99px;background:#11182ac9;color:#c5d1e8;font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #42d6a477}.icon-btn{height:39px;width:39px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:#c6d3eb}.icon-btn:hover{border-color:#53e0e766;color:var(--cyan)}
+    .welcome{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:25px}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-weight:700;margin:0 0 9px}.welcome h2{font:600 clamp(26px,4vw,36px) 'Space Grotesk',sans-serif;letter-spacing:-1px;margin:0}.welcome p.sub{color:var(--muted);margin:9px 0 0;font-size:14px}.date-pill{color:#c3cde1;border:1px solid var(--line);background:#11182a99;padding:11px 14px;border-radius:12px;font-size:12px;white-space:nowrap}
+    .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px}.card{border:1px solid var(--line);background:linear-gradient(145deg,rgba(22,31,52,.96),rgba(15,22,39,.97));border-radius:22px;padding:23px;box-shadow:var(--shadow);min-width:0}.card-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.card-title{font-weight:600;font-size:14px;color:#e6edfc}.card-caption{font-size:12px;color:var(--muted);margin-top:5px}.mini-icon{height:39px;width:39px;border-radius:13px;display:grid;place-items:center;background:#53e0e715;color:var(--cyan);font-size:16px}.led-card{grid-column:span 7;min-height:275px;position:relative;overflow:hidden}.led-card:after{content:'';position:absolute;width:240px;height:240px;border-radius:50%;right:-75px;top:50px;background:radial-gradient(circle,rgba(83,224,231,.12),transparent 68%);pointer-events:none}.led-content{display:flex;align-items:center;justify-content:space-between;gap:25px;margin-top:25px;position:relative;z-index:1}.led-copy h3{font:600 25px 'Space Grotesk',sans-serif;margin:0 0 8px}.led-copy p{color:var(--muted);font-size:13px;line-height:1.6;max-width:310px;margin:0}.status-chip{display:inline-flex;align-items:center;gap:7px;margin-top:17px;border-radius:99px;padding:7px 10px;font-size:11px;font-weight:700;letter-spacing:.5px;background:#ff6b7a14;color:#ff8994;border:1px solid #ff6b7a2c}.status-chip.on{background:#42d6a414;color:var(--green);border-color:#42d6a433}.bulb-wrap{width:132px;height:132px;flex:0 0 132px;border-radius:50%;display:grid;place-items:center;border:1px solid #a5b7dc20;background:radial-gradient(circle,#202e49 0%,#141e33 62%,#11182a 100%);color:#66748f;font-size:46px;transition:.3s}.bulb-wrap.on{color:#ffe28a;border-color:#ffe28a66;box-shadow:0 0 0 12px #ffe28a08,0 0 45px #ffe28a22;text-shadow:0 0 25px #ffe28a88}.led-controls{display:flex;gap:10px;margin-top:22px;position:relative;z-index:1}.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;font-size:12px;transition:transform .18s,opacity .18s,border-color .18s}.btn:active{transform:scale(.98)}.btn:disabled{opacity:.5;cursor:wait}.btn-on{color:#061a1a;background:linear-gradient(135deg,#66f0d0,#53e0e7);box-shadow:0 7px 22px #53e0e71c}.btn-off{color:#d8e1f5;background:#1b2740;border:1px solid #35425d}.btn-off:hover{border-color:#ff6b7a77}.btn-on i,.btn-off i{margin-right:7px}
+    .sensor-card{grid-column:span 2;min-height:275px}.sensor-value{font:600 38px 'Space Grotesk',sans-serif;letter-spacing:-1.4px;margin:31px 0 4px;white-space:nowrap}.unit{font-size:17px;color:#8e9bb7;font-weight:500;letter-spacing:0}.sensor-note{font-size:12px;color:var(--muted)}.meter{height:5px;background:#25314a;border-radius:99px;margin-top:22px;overflow:hidden}.meter-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .6s}.sensor-foot{display:flex;justify-content:space-between;color:#7f8ba6;font-size:10px;margin-top:8px}.wide-card{grid-column:span 8}.status-card{grid-column:span 4}.section-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}.section-heading h3{font:600 16px 'Space Grotesk',sans-serif;margin:0}.section-heading p{margin:5px 0 0;color:var(--muted);font-size:12px}.tiny-tag{font-size:10px;color:#9ba9c5;border:1px solid var(--line);border-radius:8px;padding:7px 9px}.info-row{display:flex;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid var(--line)}.info-row:last-child{border-bottom:0;padding-bottom:0}.info-symbol{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#7c8cff15;color:#9da9ff}.info-text{flex:1;min-width:0}.info-text strong{font-size:12px;display:block;font-weight:600}.info-text span{display:block;color:var(--muted);font-size:11px;margin-top:4px}.info-value{font-size:11px;font-weight:700;color:#dce7fb;white-space:nowrap}.live-label{color:var(--green);font-size:10px;font-weight:700;letter-spacing:1px}.activity-empty{display:flex;align-items:center;gap:12px;padding:15px;border:1px dashed #34415c;border-radius:14px;color:var(--muted);font-size:12px;line-height:1.5}.activity-empty i{font-size:18px;color:#7787a7}.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#66738f;font-size:11px;margin-top:25px;padding:0 4px}.toast{position:fixed;right:22px;bottom:22px;max-width:calc(100% - 44px);padding:13px 16px;border:1px solid var(--line);background:#18233a;color:var(--text);border-radius:13px;box-shadow:var(--shadow);font-size:13px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;z-index:10}.toast.show{opacity:1;transform:translateY(0)}.toast.error{border-color:#ff6b7a66}.hidden{display:none!important}
+    .login-screen{min-height:100vh;display:grid;place-items:center;padding:22px}.login-card{width:min(430px,100%);padding:32px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,#17223a,#101729);box-shadow:var(--shadow)}.login-card .brand{margin-bottom:28px}.login-card h2{font:600 25px 'Space Grotesk',sans-serif;margin:0 0 8px}.login-card>p{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 24px}.field{display:block;margin:14px 0}.field span{display:block;font-size:12px;color:#b6c3dc;margin-bottom:8px}.field input{width:100%;padding:13px 14px;border-radius:11px;border:1px solid #2b3954;background:#0c1425;color:var(--text);outline:none}.field input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #53e0e711}.login-card .btn{width:100%;margin-top:8px}.login-error{color:#ff8994;font-size:12px;line-height:1.5;margin-top:13px;min-height:18px}.login-foot{font-size:11px;color:#7583a0;margin-top:20px;text-align:center}
+    @media(max-width:980px){.led-card{grid-column:span 12}.sensor-card{grid-column:span 6;min-height:225px}.wide-card{grid-column:span 7}.status-card{grid-column:span 5}}
+    @media(max-width:650px){.shell{padding:19px 14px 28px}.topbar{margin-bottom:27px}.brand h1{font-size:18px}.brand-icon{width:42px;height:42px}.connection{padding:9px 10px;font-size:0;gap:0}.connection .dot{margin-right:0}.welcome{display:block}.date-pill{display:inline-block;margin-top:17px}.card{padding:18px;border-radius:18px}.led-content{gap:10px;align-items:center}.led-copy h3{font-size:21px}.led-copy p{font-size:12px}.bulb-wrap{width:92px;height:92px;flex-basis:92px;font-size:32px}.led-card{min-height:0}.sensor-card{grid-column:span 6;padding:17px;min-height:205px}.sensor-value{font-size:31px;margin-top:27px}.wide-card,.status-card{grid-column:span 12}.led-controls .btn{flex:1;padding:12px 9px}.footer{line-height:1.7}.top-actions{gap:7px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <section id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="brand"><div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div><div><h1>HomeSecure</h1><p>SMART HOME · IOT CONTROL</p></div></div>
+      <h2>Welcome back</h2><p>Sign in to monitor your home sensors and control your connected devices.</p>
+      <form id="loginForm">
+        <label class="field"><span>Email address</span><input id="email" type="email" autocomplete="username" placeholder="you@example.com" required></label>
+        <label class="field"><span>Password</span><input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required></label>
+        <button class="btn btn-on" id="loginBtn" type="submit"><i class="fa-solid fa-arrow-right-to-bracket"></i> Sign in securely</button>
+        <div id="loginError" class="login-error" role="alert"></div>
+      </form>
+      <div class="login-foot"><i class="fa-solid fa-lock"></i> Secured with Firebase Authentication</div>
+    </div>
+  </section>
+
+  <main id="dashboard" class="shell hidden">
+    <header class="topbar">
+      <div class="brand"><div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div><div><h1>HomeSecure</h1><p>SMART HOME · IOT CONTROL</p></div></div>
+      <div class="top-actions"><div class="connection"><span class="dot" id="connectionDot"></span><span id="connectionText">Connecting</span></div><button class="icon-btn" id="refreshBtn" title="Refresh sensor values" aria-label="Refresh sensor values"><i class="fa-solid fa-rotate"></i></button><button class="icon-btn" id="logoutBtn" title="Sign out" aria-label="Sign out"><i class="fa-solid fa-arrow-right-from-bracket"></i></button></div>
+    </header>
+    <section class="welcome"><div><p class="eyebrow">CONTROL CENTER / OVERVIEW</p><h2>Your home, at a glance.</h2><p class="sub">Monitor your environment and manage connected devices in real time.</p></div><div class="date-pill"><i class="fa-regular fa-calendar" style="margin-right:8px;color:var(--cyan)"></i><span id="todayDate">Loading date…</span></div></section>
+    <section class="grid">
+      <article class="card led-card">
+        <div class="card-head"><div><div class="card-title">Device control</div><div class="card-caption">Remote LED · ESP32</div></div><div class="mini-icon"><i class="fa-solid fa-lightbulb"></i></div></div>
+        <div class="led-content"><div class="led-copy"><h3 id="ledHeading">LED is OFF</h3><p>Control your connected LED from this dashboard. Your command is synced with Firebase.</p><div id="ledStatus" class="status-chip"><span class="dot" style="background:var(--red);box-shadow:none"></span> DEVICE OFF</div></div><div id="bulbWrap" class="bulb-wrap"><i class="fa-solid fa-lightbulb"></i></div></div>
+        <div class="led-controls"><button class="btn btn-on" id="turnOnBtn"><i class="fa-solid fa-power-off"></i> Turn ON</button><button class="btn btn-off" id="turnOffBtn"><i class="fa-solid fa-circle-stop"></i> Turn OFF</button></div>
+      </article>
+      <article class="card sensor-card"><div class="card-head"><div><div class="card-title">Temperature</div><div class="card-caption">Ambient temperature</div></div><div class="mini-icon" style="color:#ffad76;background:#ffad7615"><i class="fa-solid fa-temperature-half"></i></div></div><div class="sensor-value"><span id="temperatureValue">--</span><span class="unit"> °C</span></div><div class="sensor-note" id="temperatureNote">Waiting for DHT11 data</div><div class="meter"><div class="meter-fill" id="temperatureMeter"></div></div><div class="sensor-foot"><span>0°C</span><span>50°C</span></div></article>
+      <article class="card sensor-card"><div class="card-head"><div><div class="card-title">Humidity</div><div class="card-caption">Air moisture</div></div><div class="mini-icon" style="color:#75b8ff;background:#75b8ff15"><i class="fa-solid fa-droplet"></i></div></div><div class="sensor-value"><span id="humidityValue">--</span><span class="unit"> %</span></div><div class="sensor-note" id="humidityNote">Waiting for DHT11 data</div><div class="meter"><div class="meter-fill" id="humidityMeter"></div></div><div class="sensor-foot"><span>0%</span><span>100%</span></div></article>
+      <article class="card wide-card"><div class="section-heading"><div><h3>System overview</h3><p>Connection and device information</p></div><span class="tiny-tag"><i class="fa-solid fa-microchip" style="margin-right:5px"></i> ESP32</span></div><div class="info-row"><div class="info-symbol"><i class="fa-solid fa-cloud"></i></div><div class="info-text"><strong>Firebase Realtime Database</strong><span>Live data synchronisation</span></div><div class="info-value" id="firebaseStatus">Connecting…</div></div><div class="info-row"><div class="info-symbol"><i class="fa-solid fa-wifi"></i></div><div class="info-text"><strong>Device status</strong><span>Based on latest sensor update</span></div><div class="info-value" id="deviceStatus">Checking…</div></div><div class="info-row"><div class="info-symbol"><i class="fa-regular fa-clock"></i></div><div class="info-text"><strong>Last sensor update</strong><span>Latest data received from device</span></div><div class="info-value" id="lastUpdated">Not received</div></div></article>
+      <article class="card status-card"><div class="section-heading"><div><h3>Activity</h3><p>Dashboard status</p></div><span class="live-label"><i class="fa-solid fa-circle" style="font-size:7px;margin-right:5px"></i> LIVE</span></div><div class="activity-empty"><i class="fa-solid fa-wave-square"></i><span id="activityText">Waiting for Firebase connection and device data.</span></div><div class="info-row" style="margin-top:12px"><div class="info-symbol" style="color:var(--green);background:#42d6a414"><i class="fa-solid fa-lock"></i></div><div class="info-text"><strong>Account security</strong><span>Authenticated session</span></div><div class="info-value" style="color:var(--green)">Secure</div></div></article>
+    </section>
+    <footer class="footer"><span>© <span id="year"></span> HomeSecure · IoT Home Security</span><span>Built for your connected home <i class="fa-solid fa-heart" style="color:#ff7182;margin-left:4px"></i></span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script>
+    // Keep these values aligned with your existing Firebase project.
+    const firebaseConfig = {
+      apiKey: "AIzaSyAw71OVV-HecO634zWDFD63C407F-QbBaw",
+      authDomain: "home-fb3df.firebaseapp.com",
+      databaseURL: "https://home-fb3df-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "home-fb3df",
+      storageBucket: "home-fb3df.firebasestorage.app",
+      messagingSenderId: "81654272803",
+      appId: "1:81654272803:web:5481019de12a0c693ef296",
+      measurementId: "G-KF8XMF9XPT"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+    const $ = id => document.getElementById(id);
+    let toastTimer;
+    let sensorUpdatedAt = null;
+    let lastActivity = 'Dashboard ready';
+
+    $('todayDate').textContent = new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'}).format(new Date());
+    $('year').textContent = new Date().getFullYear();
+
+    function toast(message, error=false){
+      const el=$('toast'); el.textContent=message; el.classList.toggle('error',error); el.classList.add('show');
+      clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
+    }
+    function setConnection(online, text){
+      $('connectionText').textContent=text;
+      $('connectionDot').style.background=online?'var(--green)':'var(--red)';
+      $('connectionDot').style.boxShadow=online?'0 0 12px #42d6a477':'0 0 12px #ff6b7a55';
+      $('firebaseStatus').textContent=online?'Connected':'Disconnected';
+      $('firebaseStatus').style.color=online?'var(--green)':'var(--red)';
+    }
+    function setLed(value){
+      const on = value===true || value===1 || String(value).toLowerCase()==='true' || String(value)==='1' || String(value).toLowerCase()==='on';
+      $('ledHeading').textContent=on?'LED is ON':'LED is OFF';
+      $('ledStatus').classList.toggle('on',on);
+      $('ledStatus').innerHTML = `<span class="dot" style="background:${on?'var(--green)':'var(--red)'};box-shadow:none"></span> DEVICE ${on?'ON':'OFF'}`;
+      $('bulbWrap').classList.toggle('on',on);
+      $('turnOnBtn').disabled=on; $('turnOffBtn').disabled=!on;
+    }
+    function showSensor(valueId,noteId,meterId,value,kind){
+      const num=Number(value);
+      if(value===null || value===undefined || value==='' || !Number.isFinite(num)){
+        $(valueId).textContent='--'; $(noteId).textContent='Waiting for sensor data'; $(meterId).style.width='0%'; return;
+      }
+      $(valueId).textContent=Number.isInteger(num)?num:String(Number(num.toFixed(1)));
+      const max=kind==='temperature'?50:100;
+      $(meterId).style.width=Math.max(0,Math.min(100,(num/max)*100))+'%';
+      $(noteId).textContent=kind==='temperature'?(num<18?'Cool environment':num<=30?'Comfortable range':'Warm environment'):(num<30?'Low humidity':num<=60?'Comfortable range':'High humidity');
+    }
+    function formatUpdated(value){
+      if(value===null||value===undefined||value==='')return 'Not received';
+      let d;
+      if(typeof value==='number') d=new Date(value < 1e12 ? value*1000 : value);
+      else if(typeof value==='string' && /^\d+$/.test(value)) {const n=Number(value);d=new Date(n<1e12?n*1000:n)}
+      else d=new Date(value);
+      if(Number.isNaN(d.getTime())) return String(value);
+      sensorUpdatedAt=d;
+      return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    }
+    function updateDeviceStatus(){
+      if(!sensorUpdatedAt){$('deviceStatus').textContent='Waiting';$('deviceStatus').style.color='var(--muted)';return;}
+      const age=Date.now()-sensorUpdatedAt.getTime();
+      const online=age<90000;
+      $('deviceStatus').textContent=online?'Online':'No recent data';
+      $('deviceStatus').style.color=online?'var(--green)':'var(--red)';
+    }
+    async function writeLed(value){
+      $('turnOnBtn').disabled=true; $('turnOffBtn').disabled=true;
+      try{
+        await db.ref('/device/led').set(value);
+        lastActivity=value?'LED turned ON':'LED turned OFF'; $('activityText').textContent=lastActivity;
+        toast(value?'LED ON command sent':'LED OFF command sent');
+      }catch(err){toast('Could not update LED: '+(err.message||'check database rules'),true);}
+      finally{setTimeout(()=>{const current=$('ledHeading').textContent.includes('ON');$('turnOnBtn').disabled=current;$('turnOffBtn').disabled=!current;},400)}
+    }
+    $('turnOnBtn').addEventListener('click',()=>writeLed(true));
+    $('turnOffBtn').addEventListener('click',()=>writeLed(false));
+    $('refreshBtn').addEventListener('click',()=>{toast('Sensor values are synced live from Firebase');$('refreshBtn').classList.add('spin');setTimeout(()=>$('refreshBtn').classList.remove('spin'),500);});
+    $('logoutBtn').addEventListener('click',()=>auth.signOut());
+    $('loginForm').addEventListener('submit',async e=>{
+      e.preventDefault(); $('loginError').textContent=''; $('loginBtn').disabled=true; $('loginBtn').innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Signing in…';
+      try{await auth.signInWithEmailAndPassword($('email').value.trim(),$('password').value)}
+      catch(err){$('loginError').textContent=err.code==='auth/invalid-credential'?'Email or password is incorrect.':(err.message||'Sign-in failed. Check your Firebase Authentication settings.');}
+      finally{$('loginBtn').disabled=false;$('loginBtn').innerHTML='<i class="fa-solid fa-arrow-right-to-bracket"></i> Sign in securely';}
+    });
+    auth.onAuthStateChanged(user=>{
+      $('loginScreen').classList.toggle('hidden',!!user); $('dashboard').classList.toggle('hidden',!user);
+      if(user){setConnection(true,'Connected');startListeners();}
+    });
+    let listenersStarted=false;
+    function startListeners(){
+      if(listenersStarted)return; listenersStarted=true;
+      db.ref('.info/connected').on('value',snap=>setConnection(snap.val()===true,snap.val()===true?'Connected':'Reconnecting'));
+      db.ref('/device/led').on('value',snap=>setLed(snap.val()),err=>toast('LED read failed: '+err.message,true));
+      db.ref('/sensors/temperature').on('value',snap=>showSensor('temperatureValue','temperatureNote','temperatureMeter',snap.val(),'temperature'),err=>toast('Temperature read failed',true));
+      db.ref('/sensors/humidity').on('value',snap=>showSensor('humidityValue','humidityNote','humidityMeter',snap.val(),'humidity'),err=>toast('Humidity read failed',true));
+      db.ref('/sensors/updatedAt').on('value',snap=>{
+        const value=snap.val(); $('lastUpdated').textContent=formatUpdated(value); updateDeviceStatus();
+      },()=>{});
+      setInterval(updateDeviceStatus,10000);
+    }
+  </script>
+</body>
+</html>
